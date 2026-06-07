@@ -1,4 +1,9 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(__file__))
+
 from search import search_prompt
+
 
 def main():
     chain = search_prompt()
@@ -6,8 +11,19 @@ def main():
     if not chain:
         print("Não foi possível iniciar o chat. Verifique os erros de inicialização.")
         return
-    
-    pass
+
+    print("Chat iniciado. Digite 'sair' para encerrar.\n")
+    while True:
+        question = input("Faça sua pergunta: ").strip()
+        if not question:
+            continue
+        if question.lower() in ("sair", "exit", "quit"):
+            break
+        answer = chain(question)
+        print(f"\nPERGUNTA: {question}")
+        print(f"RESPOSTA: {answer}")
+        print("---")
+
 
 if __name__ == "__main__":
     main()
