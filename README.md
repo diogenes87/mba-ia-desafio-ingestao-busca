@@ -63,7 +63,27 @@ PG_VECTOR_COLLECTION_NAME=desafio_collection
 PDF_PATH=document.pdf
 ```
 
-> O sistema detecta automaticamente qual provedor usar com base na chave preenchida. Se ambas estiverem preenchidas, OpenAI tem prioridade.
+> O sistema detecta automaticamente qual provedor usar com base na chave preenchida. Se ambas estiverem preenchidas, Google Gemini tem prioridade.
+
+### 5. Adicione o seu PDF
+
+Coloque o arquivo PDF na **raiz do repositório** (mesmo nível do `docker-compose.yml`) com o nome `document.pdf`:
+
+```
+mba-ia-desafio-ingestao-busca/
+├── document.pdf          ← seu PDF aqui
+├── docker-compose.yml
+├── requirements.txt
+└── src/
+```
+
+Se preferir usar um nome de arquivo diferente, atualize a variável `PDF_PATH` no `.env`:
+
+```env
+PDF_PATH=meu-relatorio.pdf
+```
+
+> **Atenção:** o PDF deve estar na raiz do repositório. Caminhos absolutos também são aceitos, ex: `PDF_PATH=C:\Users\usuario\Downloads\relatorio.pdf`
 
 ## Execução
 
@@ -134,3 +154,29 @@ Faça sua pergunta: sair
 - **PostgreSQL + pgVector** — armazenamento de vetores
 - **OpenAI / Google Gemini** — embeddings e geração de respostas
 - **Docker** — execução do banco de dados
+
+
+## Resumo para subir a aplicação:
+
+  Resumo dos comandos (do zero)
+
+  # 1. Entre no diretório
+  cd "<PATH_TO_REPO>\GitHub\mba-ia-desafio-ingestao-busca"
+
+  # 2. Suba o banco (Docker Desktop deve estar aberto)
+  docker compose up -d
+
+  # 3. Ative o venv
+  .\venv\Scripts\activate
+
+  # 4. Ingira o PDF (apenas na primeira vez)
+  python src/ingest.py
+
+  # 5. Inicie o chat
+  python src/chat.py
+
+## Considerações finais
+    - Sobre a versao do GEMINI foi preciso utilizar com os deltalhes abaixo para conseguir rodar localmente, essa é a versão gratis e funcional na data de hoje (2026-06-07 - YYYY-MM-DD): 
+        GOOGLE_LLM_MODEL=gemini-2.5-flash-lite 
+        GOOGLE_EMBEDDING_MODEL=models/gemini-embedding-001
+        
